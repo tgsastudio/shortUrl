@@ -38,4 +38,19 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    /**
+     * Render the exception into an HTTP response.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function render($request, \Throwable $e)
+    {
+        return response()->json([
+            'status' => false,
+            'code' => $e->getCode(),
+            'message' => $e->getMessage()
+        ], 422);
+    }
 }

@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers', 'middleware' => ['api']], function () {
+
+    Route::put('/url/create', 'UrlController@create');
+    Route::get('/url/getOrigin', 'UrlController@getOriginUrl');
+    Route::get('/url/getAll', 'UrlController@getAll');
+    Route::put('/drafts/products/{product}/multi-language-status', 'MultiLanguageFlowController@update')->name('drafts.products.multi-language-status.update');
 });
