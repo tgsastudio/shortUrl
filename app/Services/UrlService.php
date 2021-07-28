@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\ShortUrlRepo;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * Class UrlService
@@ -49,7 +50,6 @@ class UrlService
     public function findByShort($shortString): string
     {
         $exists = $this->repo->findByShort($shortString);
-
         if (!$exists) {
             throw new \Exception('not found');
         }
@@ -59,9 +59,7 @@ class UrlService
 
     public function getAll($perPage, $currentPage)
     {
-        $data = $this->repo->listByPage($perPage, $currentPage);
-
-        return $data;
+        return $this->repo->listByPage($perPage, $currentPage);
     }
 
     private function genUrl($shortString)

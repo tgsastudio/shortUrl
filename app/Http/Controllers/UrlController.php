@@ -29,11 +29,9 @@ class UrlController extends Controller
         return response()->json(['status' => true, 'data' => $data], 200);
     }
 
-    public function getAll(): JsonResponse
+    public function getAll(Request $request): JsonResponse
     {
-        $perPage = 15;
-        $page = 1;
-        $data = $this->urlService->getAll($perPage, $page);
+        $data = $this->urlService->getAll($request->perPage, $request->page);
 
         return response()->json(['status' => true, 'data' => $data], 200);
     }

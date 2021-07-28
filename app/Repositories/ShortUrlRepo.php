@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\ShortUrl;
+use Illuminate\Support\Facades\Cache;
 
 class ShortUrlRepo
 {
@@ -25,7 +26,9 @@ class ShortUrlRepo
 
     public function findByShort($short)
     {
-        return $this->model->whereShortString($short)->first();
+        return Cache::remember('S-' . $short, 5, function() use($short) {
+            return $this->model->whereShortString($short)->first();
+        });
     }
 
     public function qq()
@@ -35,6 +38,6 @@ class ShortUrlRepo
 
     public function listByPage(int $perPage = 15, int $currentPage = 1)
     {
-        return $this->model->paginate($perPage);
+        return $this->model->paginate($perPage, ['id', 'short_string', 'origin_url'], 3, $currentPage);
     }
 }
