@@ -19,12 +19,14 @@ class UserService
             throw new \Exception('User already exists');
         }
 
-        $passwordHash = password_hash($password, PASSWORD_BCRYPT);
+        $now = date('Y-m-d H:i:s');
 
         return User::insert([
             'name' => $name,
             'email' => $email,
             'password' => password_hash($password, PASSWORD_BCRYPT),
+            'created_at' => $now,
+            'updated_at' => $now,
         ]);
     }
 }

@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Repositories\ShortUrlRepo;
-use Illuminate\Support\Facades\Cache;
 
 /**
  * Class UrlService
@@ -21,9 +20,6 @@ class UrlService
 
     public function create($url): string
     {
-        // todo: exception handler
-        // throw new \Exception('eeeeee');
-
         // find if exists
         $exists = $this->repo->findByOrigin($url);
         if ($exists) {
